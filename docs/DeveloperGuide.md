@@ -320,6 +320,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 4. BZNUS saves the contact information.
 
+5. BZNUS shows a success message to show the customer is added.
+
 Use case ends.
 
 **Extensions**
@@ -353,6 +355,9 @@ Use case ends.
 3. User confirms the deletion.
 
 4. BZNUS deletes the customer profile and removes them from the list.
+
+5. BZNUS shows a success message to show the customer is deleted.
+
    Use case ends.
 
 **Extensions:**
