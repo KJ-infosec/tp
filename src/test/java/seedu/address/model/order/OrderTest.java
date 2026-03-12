@@ -63,8 +63,12 @@ public class OrderTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Order.class.getCanonicalName() + "{item=" + ORDER_A.getItem() + ", quantity=" + ORDER_A.getQuantity()
-                + ", deliveryTime=" + ORDER_A.getDeliveryTime() + ", address=" + ORDER_A.getAddress() + ", status=" + ORDER_A.getStatus() + "}";
+        String expected = Order.class.getCanonicalName()
+                + "{item=" + ORDER_A.getItem()
+                + ", quantity=" + ORDER_A.getQuantity()
+                + ", deliveryTime=" + ORDER_A.getDeliveryTime()
+                + ", address=" + ORDER_A.getAddress()
+                + ", status=" + ORDER_A.getStatus() + "}";
         assertEquals(expected, ORDER_A.toString());
     }
 }
