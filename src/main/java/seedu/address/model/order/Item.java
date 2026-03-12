@@ -18,7 +18,7 @@ public class Item {
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String itemName;
+    public final String value;
 
     /**
      * Constructs an {@code Item}.
@@ -28,7 +28,7 @@ public class Item {
     public Item(String itemName) {
         requireNonNull(itemName);
         checkArgument(isValidItem(itemName), MESSAGE_CONSTRAINTS);
-        this.itemName = itemName;
+        this.value = itemName;
     }
 
     /**
@@ -41,7 +41,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return itemName;
+        return value;
     }
 
     @Override
@@ -56,11 +56,11 @@ public class Item {
         }
 
         Item otherItem = (Item) other;
-        return itemName.equals(otherItem.itemName);
+        return value.equals(otherItem.value);
     }
 
     @Override
     public int hashCode() {
-        return itemName.hashCode();
+        return value.hashCode();
     }
 }
