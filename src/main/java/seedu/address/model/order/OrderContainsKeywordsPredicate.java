@@ -4,8 +4,14 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 
+/**
+ * Tests that a {@code Order}'s fields contain the given search phrase.
+ */
 public class OrderContainsKeywordsPredicate implements Predicate<Order> {
 
+    /**
+     * Specifies the type of search to perform.
+     */
     public enum SearchType {
         ITEM, //-i
         ADDRESS, //-a
@@ -14,6 +20,13 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
 
     private final SearchType searchType;
     private final String keyword;
+
+    /**
+     * Constructs a predicate with the given search type and keyword.
+     *
+     * @param searchType The type of search (ITEM, ADDRESS, or CUSTOMER)
+     * @param keyword The search keyword
+     */
     public OrderContainsKeywordsPredicate(SearchType searchType, String keyword) {
         this.searchType = searchType;
         this.keyword = keyword;

@@ -1,13 +1,14 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import java.util.Optional;
-
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import seedu.address.logic.commands.FindOrderCommand;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
+
+import java.util.Optional;
+
+import seedu.address.logic.commands.FindOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.order.OrderContainsKeywordsPredicate;
 
@@ -16,10 +17,10 @@ import seedu.address.model.order.OrderContainsKeywordsPredicate;
  */
 public class FindOrderCommandParser implements Parser<FindOrderCommand> {
 
-/**
- * Parses the given {@code String} of arguments in the context of the FindOrderCommand
- * and returns a FindOrderCommand object for execution.
- */
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindOrderCommand
+     * and returns a FindOrderCommand object for execution.
+     */
     public FindOrderCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
@@ -32,13 +33,13 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
 
         int count = 0;
         if (itemSearch.isPresent()) {
-                count++;
+            count++;
         }
         if (addressSearch.isPresent()) {
-                count++;
+            count++;
         }
         if (customerSearch.isPresent()) {
-                count++;
+            count++;
         }
 
         if (count != 1) {
