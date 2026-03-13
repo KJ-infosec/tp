@@ -16,7 +16,7 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
 
     public FindOrderCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        
+
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER);
 
@@ -37,21 +37,21 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         if (itemSearch.isPresent()) {
             return new FindOrderCommand(
                     new OrderContainsKeywordsPredicate(
-                            OrderContainsKeywordsPredicate.SearchType.ITEM, 
+                            OrderContainsKeywordsPredicate.SearchType.ITEM,
                             itemSearch.get()));
         }
 
         if (addressSearch.isPresent()) {
             return new FindOrderCommand(
                     new OrderContainsKeywordsPredicate(
-                            OrderContainsKeywordsPredicate.SearchType.ADDRESS, 
+                            OrderContainsKeywordsPredicate.SearchType.ADDRESS,
                             addressSearch.get()));
         }
 
         // customerSearch must be present
         return new FindOrderCommand(
                 new OrderContainsKeywordsPredicate(
-                        OrderContainsKeywordsPredicate.SearchType.CUSTOMER, 
+                        OrderContainsKeywordsPredicate.SearchType.CUSTOMER,
                         customerSearch.get()));
     }
 }

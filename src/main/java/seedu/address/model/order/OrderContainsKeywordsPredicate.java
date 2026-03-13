@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 
 public class OrderContainsKeywordsPredicate implements Predicate<Order> {
-    
+
     public enum SearchType {
         ITEM,  //-i
         ADDRESS, //-a
