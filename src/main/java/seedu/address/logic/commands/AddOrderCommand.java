@@ -60,7 +60,8 @@ public class AddOrderCommand extends Command {
     /**
      * Creates an AddOrderCommand to add the specified {@code order}
      */
-    public AddOrderCommand(Index index, Item item, Quantity quantity, DeliveryTime deliveryTime, Optional<Address> addressOptional, Optional<Status> statusOptional) {
+    public AddOrderCommand(Index index, Item item, Quantity quantity, DeliveryTime deliveryTime,
+            Optional<Address> addressOptional, Optional<Status> statusOptional) {
         requireNonNull(index);
         requireNonNull(item);
         requireNonNull(quantity);

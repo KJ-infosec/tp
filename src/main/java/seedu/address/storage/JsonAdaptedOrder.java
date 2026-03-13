@@ -82,7 +82,8 @@ public class JsonAdaptedOrder {
 
         // QUANTITY
         if (quantity == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Quantity.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Quantity.class.getSimpleName()));
         }
         final Quantity modelQuantity;
         try {
@@ -93,7 +94,8 @@ public class JsonAdaptedOrder {
 
         // DELIVERY TIME
         if (deliveryTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DeliveryTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DeliveryTime.class.getSimpleName()));
         }
         final DeliveryTime modelDeliveryTime;
         try {

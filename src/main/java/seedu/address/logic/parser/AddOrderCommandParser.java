@@ -30,7 +30,8 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
      */
     public AddOrderCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_DATETIME, PREFIX_ADDRESS, PREFIX_STATUS);
+                ArgumentTokenizer.tokenize(args, PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_DATETIME,
+                        PREFIX_ADDRESS, PREFIX_STATUS);
 
         String preamble = argMultimap.getPreamble();
 
@@ -51,7 +52,8 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_DATETIME, PREFIX_ADDRESS, PREFIX_STATUS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_DATETIME,
+                PREFIX_ADDRESS, PREFIX_STATUS);
         Item item = ParserUtil.parseItem(argMultimap.getValue(PREFIX_ITEM).get());
         Quantity quantity = ParserUtil.parseQuantity(argMultimap.getValue(PREFIX_QUANTITY).get());
         DeliveryTime deliveryTime = ParserUtil.parseDeliveryTime(argMultimap.getValue(PREFIX_DATETIME).get());
