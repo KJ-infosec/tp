@@ -100,19 +100,15 @@ public class AddressBookTest {
         AddressBookStub(Collection<Person> persons) {
             this.persons.setAll(persons);
         }
+
         @Override
         public ObservableList<Order> getOrderList() {
-            return FXCollections.observableArrayList(); // Return an empty list or mock data
+            return orders;
         }
 
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
-        }
-
-        @Override
-        public ObservableList<Order> getOrderList() {
-            return orders;
         }
     }
 
