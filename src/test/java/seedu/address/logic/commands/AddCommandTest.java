@@ -1,17 +1,14 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import static java.util.Objects.requireNonNull;
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
@@ -25,7 +22,9 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
+import static seedu.address.testutil.Assert.assertThrows;
 import seedu.address.testutil.PersonBuilder;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 public class AddCommandTest {
 
@@ -168,20 +167,21 @@ public class AddCommandTest {
         @Override
         public ObservableList<Order> getFilteredOrderList() {
             throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
         public void addOrder(Order order) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
         public void deleteOrder(Order order) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void deleteOrdersForCustomer(Index customerIndex) {
+        public void deleteOrdersForCustomer(Index customerIndex) {
             throw new AssertionError("This method should not be called.");
         }
-
-        @Override public ObservableList<Order> getOrderList() {
+        
+        public ObservableList<Order> getOrderList() {
             throw new AssertionError("This method should not be called.");
         }
     }
