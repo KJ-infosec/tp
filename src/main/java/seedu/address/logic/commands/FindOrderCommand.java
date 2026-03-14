@@ -19,8 +19,8 @@ public class FindOrderCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all orders whose item, address, "
             + "or customerId contain the specified search phrase (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: -i ITEM_NAME | -a ADDRESS | -c CUSTOMER_ID\n"
-            + "Example: " + COMMAND_WORD + " -i pizza";
+            + "Parameters: i/ITEM_NAME | a/ADDRESS | c/CUSTOMER_ID\n"
+            + "Example: " + COMMAND_WORD + " i/pizza";
 
     private final OrderContainsKeywordsPredicate predicate;
 
