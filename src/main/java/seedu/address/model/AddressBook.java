@@ -103,12 +103,29 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
-    public void removeOrder(Order key) {
-        orders.remove(key);
-    }
+    //// order-level operations
 
+    /**
+     * Adds an order to the address book.
+     */
     public void addOrder(Order order) {
         orders.add(order);
+    }
+
+    /**
+     * Removes {@code order} from this {@code AddressBook}.
+     * {@code order} must exist in the address book.
+     */
+    public void removeOrder(Order order) {
+        orders.remove(order);
+    }
+
+    /**
+     * Removes all orders in this {@code AddressBook} made by customer
+     * identified by {@code customerIndex}.
+     */
+    public void removeOrdersForCustomer(Index customerIndex) {
+        orders.removeOrdersForCustomer(customerIndex);
     }
 
     /**
@@ -172,9 +189,5 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return persons.hashCode();
-    }
-
-    void removeOrdersForCustomer(Index customerIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
