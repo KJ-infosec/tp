@@ -12,8 +12,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
@@ -84,7 +82,6 @@ public class HelpWindow extends UiPart<Stage> {
         addCommandBlock("delete", "Deletes the specified customer from the customer database.",
                 "delete INDEX",
                 "delete 3");
-        
         Separator orderSeparator = new Separator();
         orderSeparator.getStyleClass().add("help-separator");
         helpContentBox.getChildren().addAll(orderSeparator);
@@ -97,7 +94,8 @@ public class HelpWindow extends UiPart<Stage> {
                 "delete-o CUST_INDEX o/ORDER_INDEX",
                 "delete-o 1 o/2");
 
-        addCommandBlock("find-o", "Search for different orders with 3 category options: item name, delivery address, customer id",
+        addCommandBlock("find-o", "Search for different orders with 3 category options: "
+                + "item name, delivery address, customer id",
                 "find-o Category-Type/Category-Keywords",
                 "find-o i/pizza");
 
@@ -123,6 +121,13 @@ public class HelpWindow extends UiPart<Stage> {
         helpContentBox.getChildren().addAll(footerSeparator, footer);
     }
 
+/**
+ * Adds a command block to the help content box.
+ * @param command The command to add.
+ * @param description The description of the command.
+ * @param format The format of the command.
+ * @param example The example of the command.
+ */
     private void addCommandBlock(String command, String description, String format, String example) {
         VBox block = new VBox(4);
         block.getStyleClass().add("help-block");
