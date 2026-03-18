@@ -209,7 +209,7 @@ Format `find-o Category-Type/Category-Keywords`
 * Find the orders given the `Category-Keywords` from the `Category-Type`.
 * The category keywords refer to the keyword used to look for orders.
 * The category type refers to one of the 3 category options shown above.
-* The category type **must be one of i/a/c/s**, which are respectively item, address, customer.
+* The category type **must be one of i/a/c/s**, which are respectively item, address, customer, status.
 * This command will only accept one keyword, do not input multiple keywords.
 
 **Examples:**
@@ -218,33 +218,11 @@ Format `find-o Category-Type/Category-Keywords`
 * `find-o s/Delivered` - Look for orders that are already delivered
 
 
-### View Orders by status: `view-o`
+### Listing all customers : `list-o`
 
-View a list of orders by their status: (PREPARING/READY/DELIVERED/CANCELLED/ALL) 
+Shows a list of all orders in the address book.
 
-Format: `view-o STATUS`
-
-* Displays all orders that match the specified status.
-* The status must be one of the following: `preparing`, `ready`, `delivered`, `cancelled`, or `all`.
-* The command is case-insensitive (e.g., `PREPARING`, `Preparing`, `prEpaRIng` are all valid).
-
-**Status Options:**
-
-| Status | Meaning |
-|--------|---------|
-| `preparing` | Orders currently being prepared |
-| `ready` | Orders ready for delivery |
-| `delivered` | Orders that have been successfully delivered |
-| `cancelled` | Orders that have been cancelled |
-| `all` | All orders in the system |
-
-**Examples:**
-
-* `view-o preparing` - Look for all orders with status "preparing"
-* `view-o ready` - Look for all orders with status "ready"
-* `view-o delivered` - Look for all orders with status "delivered"
-* `view-o cancelled` - Look for all orders with status "cancelled"
-* `view-o all` - Look for all orders regardless of status
+Format: `list-o`
 
 ### Clearing all entries : `clear`
 
