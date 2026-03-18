@@ -22,7 +22,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         String lowerPhrase = searchPhrase.toLowerCase();
         return person.getName().fullName.toLowerCase().contains(lowerPhrase)
                 || person.getPhone().map(p -> p.value.toLowerCase().contains(lowerPhrase)).orElse(false)
-                || person.getEmail().map(e -> e.value.toLowerCase().contains(lowerPhrase)).orElse(false)
+                || person.getFacebook().map(e -> e.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getAddress().map(a -> a.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getTags().stream()
                         .anyMatch(tag -> tag.tagName.toLowerCase().contains(lowerPhrase));
