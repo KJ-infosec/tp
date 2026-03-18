@@ -2,8 +2,8 @@ package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,24 +19,26 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.Status;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.testutil.PersonBuilder;
 
 public class OrderListPanelTest {
 
-    private ObservableList<Person> personList;
+    private ObservableList<seedu.address.model.person.Person> personList;
     private ObservableList<Order> orderList;
     private OrderListPanel orderListPanel;
 
     @BeforeEach
     public void setUp() {
-        Person person1 = new Person(new Name("Alice Pauline"),
-                new Phone("94351253"), null, null, null);
-        Person person2 = new Person(new Name("Benson Meier"),
-                new Phone("98765432"), null, null, null);
+        seedu.address.model.person.Person person1 = new PersonBuilder()
+                .withName("Alice Pauline")
+                .withPhone("94351253")
+                .build();
+        seedu.address.model.person.Person person2 = new PersonBuilder()
+                .withName("Benson Meier")
+                .withPhone("98765432")
+                .build();
 
-        personList = FXCollections.observableArrayList(Arrays.asList(person1, person2));
+        personList = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(person1, person2)));
 
         Order order1 = new Order(
                 Index.fromZeroBased(0),
@@ -56,7 +58,7 @@ public class OrderListPanelTest {
                 new Status("READY")
         );
 
-        orderList = FXCollections.observableArrayList(Arrays.asList(order1, order2));
+        orderList = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(order1, order2)));
     }
 
     @Test

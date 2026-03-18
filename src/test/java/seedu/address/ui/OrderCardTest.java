@@ -3,9 +3,6 @@ package seedu.address.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,23 +15,30 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.Status;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.testutil.PersonBuilder;
 
 public class OrderCardTest {
 
-    private ObservableList<Person> personList;
+    private ObservableList<seedu.address.model.person.Person> personList;
     private Order order;
 
     @BeforeEach
     public void setUp() {
-        Person person1 = new Person(new Name("Alice Pauline"),
-                new Phone("94351253"), null, null, null);
-        Person person2 = new Person(new Name("Benson Meier"),
-                new Phone("98765432"), null, null, null);
+        seedu.address.model.person.Person person1 = new PersonBuilder()
+                .withName("Alice Pauline")
+                .withPhone("94351253")
+                .build();
+        seedu.address.model.person.Person person2 = new PersonBuilder()
+                .withName("Benson Meier")
+                .withPhone("98765432")
+                .build();
 
-        personList = FXCollections.observableArrayList(Arrays.asList(person1, person2));
+        personList = FXCollections.observableArrayList(
+                new java.util.ArrayList<seedu.address.model.person.Person>() {{
+                    add(person1);
+                    add(person2);
+                }}
+        );
 
         order = new Order(
                 Index.fromZeroBased(0),
