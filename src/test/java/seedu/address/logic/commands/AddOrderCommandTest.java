@@ -239,15 +239,6 @@ public class AddOrderCommandTest {
             throw new AssertionError();
         }
 
-        @Override
-        public OrderList getOrdersByStatus(Status status) {
-            throw new AssertionError();
-        }
-
-        @Override
-        public OrderList getAllOrders() {
-            throw new AssertionError();
-        }
     }
 
     private class ModelStubAcceptingOrderAdded extends ModelStub {
