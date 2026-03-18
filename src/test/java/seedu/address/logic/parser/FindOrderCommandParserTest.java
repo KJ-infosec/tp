@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindOrderCommand;
-import seedu.address.model.order.Address;
 import seedu.address.model.order.DeliveryTime;
 import seedu.address.model.order.Item;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderContainsKeywordsPredicate;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.Status;
+import seedu.address.model.person.Address;
 
 public class FindOrderCommandParserTest {
 
