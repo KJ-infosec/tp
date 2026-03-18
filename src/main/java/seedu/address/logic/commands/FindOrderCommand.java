@@ -41,14 +41,24 @@ public class FindOrderCommand extends Command {
         requireNonNull(model);
 
         if (predicate.getSearchType() == OrderContainsKeywordsPredicate.SearchType.CUSTOMER) {
-            int oneBased = Integer.parseInt(predicate.getKeyword());
-            int zeroBased = oneBased - 1;
+            String keyword = predicate.getKeyword();
+            String customerUuid;
+            
+            // Check if keyword is a UUID string (contains hyphens) or an index number
+            if (keyword.contains("-")) {
+                // It's already a UUID string
+                customerUuid = keyword;
+            } else {
+                // It's an index number, convert to UUID
+                int oneBased = Integer.parseInt(keyword);
+                int zeroBased = oneBased - 1;
 
-            if (zeroBased < 0 || zeroBased >= model.getFilteredPersonList().size()) {
-                throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                if (zeroBased < 0 || zeroBased >= model.getFilteredPersonList().size()) {
+                    throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+
+                customerUuid = model.getFilteredPersonList().get(zeroBased).getId().toString();
             }
-
-            String customerUuid = model.getFilteredPersonList().get(zeroBased).getId().toString();
 
             model.updateFilteredOrderList(
                     new OrderContainsKeywordsPredicate(OrderContainsKeywordsPredicate.SearchType.CUSTOMER, customerUuid)
