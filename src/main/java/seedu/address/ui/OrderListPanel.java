@@ -3,7 +3,6 @@ package seedu.address.ui;
 import java.util.Comparator;
 import java.util.logging.Logger;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
