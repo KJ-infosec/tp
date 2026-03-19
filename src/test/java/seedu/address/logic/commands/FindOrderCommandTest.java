@@ -66,7 +66,7 @@ public class FindOrderCommandTest {
     }
 
     @Test
-    public void execute_validOrderStatus_commandExecutes() {
+    public void execute_validOrderStatus_commandExecutes() throws CommandException {
         Model model = new ModelManager(
                 new AddressBookBuilder().withOrder(ORDER_A).withOrder(ORDER_B).build(),
                 new UserPrefs());
