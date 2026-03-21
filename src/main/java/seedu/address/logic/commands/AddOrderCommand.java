@@ -11,6 +11,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -31,6 +33,8 @@ import seedu.address.model.person.Person;
 public class AddOrderCommand extends Command {
 
     public static final String COMMAND_WORD = "order";
+
+    private static final Logger logger = Logger.getLogger(AddOrderCommand.class.getName());
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new order to a specific customer.\n"
             + "Parameters: "
@@ -91,6 +95,8 @@ public class AddOrderCommand extends Command {
 
         Person customer = lastShownList.get(customerIndex.getZeroBased());
 
+        assert customer != null : "Customer should exist if index is valid";
+
         // Resolve optional fields
         Address finalAddress;
         if (address.isPresent()) {
@@ -108,6 +114,7 @@ public class AddOrderCommand extends Command {
         toAdd = new Order(customerId, item, quantity, deliveryTime, finalAddress, finalStatus);
 
         model.addOrder(toAdd);
+        logger.log(Level.INFO, "Order added to model");
 
         String customerName = customer.getName().fullName;
 
