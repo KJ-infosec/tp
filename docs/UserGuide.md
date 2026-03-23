@@ -20,10 +20,10 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
-   A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -66,7 +66,8 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines. Space characters surrounding line-breaks may be omitted when copied over to the application.
+  * **Solution:** Type the command manually if pasting doesn't work.
 
 </box>
 
@@ -84,22 +85,41 @@ Format: `help`
 
 <div class="section-spacing">
 
-### Adding a customer: `add`
+### Adding a customer : `add`
 
 Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
+* `NAME` is mandatory. It should only contain alphanumeric characters, spaces, and apostrophes (e.g., Mary O'Connor). It cannot be blank.
+* `PHONE` must be a numeric string between 8 and 15 digits long (e.g., 91234567 or 60123456789).
+* `INSTAGRAM` should be 1–30 characters long and contain only letters, numbers, underscores, and periods. It should not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `FACEBOOK` should be 5-50 characters long and contain only letters, numbers, and periods. It should not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `ADDRESS` can be any non-blank string.
+* `REMARK` can be any string.
+
+<box type="warning" seamless>
+
+**Note:** A customer must have at least one contact method (`PHONE`, `INSTAGRAM`, `FACEBOOK` or `ADDRESS`).
+
+</box>
+
+<box type="warning" seamless>
+
+**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. (Tip: Consider adding descriptors to differentiate customers with the same name (e.g., "John Doe (neighbour)" and "John Doe (Clementi)".)
+
+</box>
+
 <box type="tip" seamless>
 
-**Tip:** A customer can have any number of tags (including 0)
+**Tip:** A customer can have any number of tags (including 0).
 
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01`
-* `add n/Betsy Crowe t/friend fb/betsy a/Blk 456, Bedok North`
-* `add n/Tech Corp SG a/Tech Tower, Level 12`
+* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01 r/prefers weekend delivery t/VIP t/regular`
+* `add n/Betsy Crowe t/friend fb/betsy.crowe a/Blk 456, Bedok North r/allergic to peanuts`
+* `add n/Tech Corp SG p/67778888 ig/techcorp.sg a/Tech Tower, Level 12 r/Invoicing required`
 
 </div>
 
@@ -136,41 +156,41 @@ Examples:
 
 <div class="section-spacing">
 
-### Finding customers: `find`
+### Finding customers : `find`
 
-Finds customers whose any of the field contain any of the given keywords.
+Finds customers whose details match the given keywords. You can search across all fields or target a specific field using prefixes.
 
 #### General Search
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans`.
 * All fields are searched.
-* Only partial words will be matched e.g. `Han` will match `Hans`
+* Partial matches are supported e.g. `Han` will match `Hans`.
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find 99272758` returns `Bernice Yu` as she had the number 99272758<br>\
+* `find 99272758` returns `Bernice Yu` if her contact details contains these digits<br>\
   ![result for 'find 99272758'](images/findBernice.png)
 
 #### Specific Field Search
 Format: `find PREFIX/KEYWORD`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* Limits the search to a single specific field.
-* Only one prefix group are allowed.
+* The search is case-insensitive. e.g `hans` will match `Hans`.
+* Limits the search to a single specified field.
+* Only one prefix can be used per command.
 
 Available Prefixes:
-* n/NAME
-* p/PHONE
-* fb/FACEBOOK
-* ig/INSTAGRAM
-* a/ADDRESS
-* r/REMARK
-* t/TAG
+* `n/NAME`
+* `p/PHONE`
+* `fb/FACEBOOK`
+* `ig/INSTAGRAM`
+* `a/ADDRESS`
+* `r/REMARK`
+* `t/TAG`
 
-Example:
-* find n/Alice returns all persons whose name contains "Alice"
-* find t/regular returns all persons whose tags contain "regular".
+Examples:
+* `find n/Alice` returns all customers whose name contains `Alice`.
+* `find t/regular` returns all customers whose tags contain `regular`.
 
 </div>
 
@@ -195,7 +215,7 @@ Examples:
 
 <div class="section-spacing">
 
-### Adding an order: `order`
+### Adding an order : `order`
 
 Adds a new order for a specific customer.
 
@@ -219,7 +239,7 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 
 <div class="section-spacing">
 
-### Searching for orders: `find-o`
+### Finding orders : `find-o`
 
 Search for different orders with 3 category options: item name, delivery address, customer id
 
@@ -248,7 +268,7 @@ Format: `list-o`
 
 </div>
 
-### Deleting an order: `delete-o`
+### Deleting an order : `delete-o`
 
 Deletes the specific order from the order database.
 
@@ -286,11 +306,14 @@ Format: `exit`
 
 </div>
 
+---
+## Data Storage
+
 <div class="section-spacing">
 
 ### Saving the data
 
-BZNUS data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+BZNUS data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 </div>
 
@@ -356,10 +379,10 @@ Action     | Format, Examples
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
-**Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
-**List Orders** | `list-o`
-**Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
+**Add**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
+**Find** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
+**List** | `list-o`
+**Delete** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
 
 </div>
 
