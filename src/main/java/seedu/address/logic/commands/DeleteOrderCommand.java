@@ -15,6 +15,9 @@ import seedu.address.model.Model;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
+/**
+ * Deletes an order identified using it's displayed index from the address book.
+ */
 public class DeleteOrderCommand extends Command {
     private static final Logger logger = Logger.getLogger(DeleteOrderCommand.class.getName());
 
@@ -58,7 +61,8 @@ public class DeleteOrderCommand extends Command {
         assert customer != null : "Customer should exist for the given order";
         String customerName = customer.getName().fullName;
 
-        return new CommandResult(String.format(MESSAGE_DELETE_ORDER_SUCCESS, Messages.format(orderToDelete, customerName)));
+        return new CommandResult(
+                String.format(MESSAGE_DELETE_ORDER_SUCCESS, Messages.format(orderToDelete, customerName)));
     }
 
     @Override
