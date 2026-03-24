@@ -7,10 +7,12 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.Messages.MESSAGE_MISSING_CONTACT_METHOD;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -68,6 +70,69 @@ public class EditCommandTest {
         expectedModel.setPerson(lastPerson, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_remarkSpecifiedUnfilteredList_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personToEdit).withRemark(VALID_REMARK_BOB).build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withRemark(VALID_REMARK_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_clearOptionalFields_keepsAtLeastOneContactMethod_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // Address remains unchanged so at least one contact method is still present after clear operations
+        assertTrue(personToEdit.getAddress().isPresent());
+
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withoutPhone()
+                .withoutFacebook()
+                .withoutInstagram()
+                .withoutRemark()
+                .build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .clearPhone()
+                .clearFacebook()
+                .clearInstagram()
+                .clearRemark()
+                .build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_clearLastContactMethod_failure() {
+        Person person = new PersonBuilder()
+                .withoutAddress()
+                .withoutFacebook()
+                .withoutInstagram()
+                .withPhone(VALID_PHONE_BOB)
+                .build();
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        customModel.addPerson(person);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearPhone().build();
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
+
+        assertCommandFailure(editCommand, customModel, MESSAGE_MISSING_CONTACT_METHOD);
     }
 
     @Test
