@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import seedu.address.logic.commands.FindOrderCommand;
@@ -87,6 +89,12 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         }
 
         if (statusSearch.isPresent()) {
+            String statusInput = statusSearch.get().toUpperCase();
+            List<String> validStatuses = Arrays.asList("PREPARING", "READY", "DELIVERED", "CANCELLED");
+            if (!validStatuses.contains(statusInput)) {
+                throw new ParseException(String.format(
+                        "Invalid status! Search only allows: %s", String.join(", ", validStatuses)));
+            }
             return new FindOrderCommand(
                     new OrderContainsKeywordsPredicate(
                             OrderContainsKeywordsPredicate.SearchType.STATUS,
