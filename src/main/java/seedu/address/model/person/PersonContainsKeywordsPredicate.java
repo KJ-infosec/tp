@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -16,20 +17,20 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     }
     private final String searchPhrase;
     private final boolean isGeneralSearch;
-    private final SearchType searchType;
+    private final List<Predicate<Person>> predicateList;
 
     /** Constructor for General Search */
     public PersonContainsKeywordsPredicate(String searchPhrase) {
         this.searchPhrase = searchPhrase;
         this.isGeneralSearch = true;
-        this.searchType = null;
+        this.predicateList = null;
     }
 
     /** Constructor for Specific Search */
-    public PersonContainsKeywordsPredicate(String searchPhrase, SearchType searchType) {
-        this.searchPhrase = searchPhrase;
+    public PersonContainsKeywordsPredicate(List<Predicate<Person>> predicateList) {
+        this.searchPhrase = null;
         this.isGeneralSearch = false;
-        this.searchType = searchType;
+        this.predicateList = predicateList;
     }
 
     @Override
@@ -57,39 +58,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     private boolean testSpecific(Person person) {
-        if (searchPhrase.isEmpty()) {
-            return false;
-        }
-        String lowerPhrase = searchPhrase.toLowerCase();
-        switch (searchType) {
-        case NAME:
-            return person.getName().toString().toLowerCase().contains(lowerPhrase);
-        case ADDRESS:
-            return person.getAddress()
-                    .map(address -> address.toString().toLowerCase().contains(lowerPhrase))
-                    .orElse(false);
-        case PHONE:
-            return person.getPhone()
-                .map(phone -> phone.toString().toLowerCase().contains(lowerPhrase))
-                .orElse(false);
-        case FACEBOOK:
-            return person.getFacebook()
-                    .map(facebook -> facebook.toString().toLowerCase().contains(lowerPhrase))
-                    .orElse(false);
-        case TAG:
-            return person.getTags().stream()
-                    .anyMatch(tag -> tag.toString().toLowerCase().contains(lowerPhrase));
-        case INSTAGRAM:
-            return person.getInstagram()
-                    .map(ig -> ig.toString().toLowerCase().contains(lowerPhrase))
-                    .orElse(false);
-        case REMARK:
-            return person.getRemark()
-                    .map(remark -> remark.toString().toLowerCase().contains(lowerPhrase))
-                    .orElse(false);
-        default:
-            return false;
-        }
+        return predicateList.stream().allMatch(p -> p.test(person));
     }
 
     @Override
