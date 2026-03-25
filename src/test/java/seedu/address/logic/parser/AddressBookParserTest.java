@@ -7,6 +7,9 @@ import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
@@ -69,7 +72,9 @@ public class AddressBookParserTest {
         String searchPhrase = "foo bar baz";
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + searchPhrase);
-        assertEquals(new FindCommand(new PersonContainsKeywordsPredicate(searchPhrase, true)), command);
+        Map<PersonContainsKeywordsPredicate.SearchType, String> searchMap = new HashMap<>();
+        assertEquals(new FindCommand(new PersonContainsKeywordsPredicate(
+                searchPhrase, true, searchMap)), command);
     }
 
     @Test

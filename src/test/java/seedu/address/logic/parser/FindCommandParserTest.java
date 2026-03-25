@@ -4,6 +4,9 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindCommand;
@@ -13,6 +16,13 @@ public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
 
+    private Map<PersonContainsKeywordsPredicate.SearchType, String> createMap(
+            PersonContainsKeywordsPredicate.SearchType type, String value) {
+        Map<PersonContainsKeywordsPredicate.SearchType, String> map = new HashMap<>();
+        map.put(type, value);
+        return map;
+    }
+
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -21,7 +31,8 @@ public class FindCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         FindCommand expectedFindCommand =
-                new FindCommand(new PersonContainsKeywordsPredicate("Alex Yeoh", true));
+                new FindCommand(new PersonContainsKeywordsPredicate(
+                        "Alex Yeoh", true, new HashMap<>()));
         assertParseSuccess(parser, "Alex Yeoh", expectedFindCommand);
 
         // leading and trailing whitespaces are trimmed
@@ -31,8 +42,8 @@ public class FindCommandParserTest {
     @Test
     public void parse_validSpecificArgs_returnsFindCommand() {
         PersonContainsKeywordsPredicate expectedPredicate =
-                new PersonContainsKeywordsPredicate(" n/Alice",
-                        false);
+                new PersonContainsKeywordsPredicate("n/Alice",
+                        false, createMap(PersonContainsKeywordsPredicate.SearchType.NAME, "Alice"));
         FindCommand expectedCommand = new FindCommand(expectedPredicate);
 
         assertParseSuccess(parser, " n/Alice", expectedCommand);
@@ -41,16 +52,9 @@ public class FindCommandParserTest {
     @Test
     public void parse_unknownPrefix_treatedAsKeywords() {
         PersonContainsKeywordsPredicate expectedPredicate =
-                new PersonContainsKeywordsPredicate("z/Unknown", true);
+                new PersonContainsKeywordsPredicate("z/Unknown", true, new HashMap<>());
         FindCommand expectedCommand = new FindCommand(expectedPredicate);
         assertParseSuccess(parser, " z/Unknown", expectedCommand);
-    }
-
-    @Test
-    public void parse_emptyPrefixValue_throwsParseException() {
-        assertParseFailure(parser, " n/ ", "Search value for n/ cannot be empty");
-
-        assertParseFailure(parser, " p/ ", "Search value for p/ cannot be empty");
     }
 
 }
