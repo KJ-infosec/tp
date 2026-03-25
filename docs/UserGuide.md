@@ -15,33 +15,35 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 
 ## Table of Contents
+
 1. [Quick start](#quick-start)
 2. [Features](#features)
-* [Viewing help: help](#viewing-help--help)
-3. [Customer command](#customer-commands)
-* [Adding a customer: add](#adding-a-customer--add)
-* [Listing all customers: list](#listing-all-customers--list)
-* [Editing a customer: edit](#editing-a-customer--edit)
-* [Finding customers: find](#finding-customers--find)
-* [Deleting a customer: delete](#deleting-a-customer--delete)
-4. [Order command](#order-commands)
-* [Adding an order: order](#adding-an-order--order)
-* [Finding orders: find-o](#finding-orders--find-o)
-* [Listing all orders: list-o](#listing-all-orders--list-o)
-* [Deleting an order: delete-o](#deleting-an-order--delete-o)
-5. [Other command](#order-commands)
-* [Clearing all entries: clear](#clearing-all-entries--clear)
-* [Exiting the program: exit](#exiting-the-program--exit)
-6. [Data storage](#data-storage)
-* [Saving the data](#saving-the-data)
-* [Editing the data file](#editing-the-data-file)
-* [Archiving the data [coming in v2.0]](#archiving-data-files-coming-in-v20)
+   - [Viewing help: `help`](#viewing-help)
+3. [Customer Commands](#customer-commands)
+   - [Adding a customer: `add`](#add)
+   - [Listing all customers: `list`](#list)
+   - [Editing a customer: `edit`](#edit)
+   - [Finding customers: `find`](#find)
+   - [Deleting a customer: `delete`](#delete)
+4. [Order Commands](#order-commands)
+   - [Adding an order: `order`](#order)
+   - [Finding orders: `find-o`](#find-o)
+   - [Editing an order: `edit-o`](#edit-o)
+   - [Listing all orders: `list-o`](#list-o)
+   - [Deleting an order: `delete-o`](#delete-o)
+5. [Other Commands](#other-commands)
+   - [Clearing all entries: `clear`](#clear)
+   - [Exiting the program: `exit`](#exit)
+6. [Data Storage](#data-storage)
+   - [Saving the data](#saving-data)
+   - [Editing the data file](#edit-data)
+   - [Archiving data files `[coming in v2.0]`](#archive-data)
 7. [FAQ](#faq)
 8. [Known issues](#known-issues)
 9. [Command summary](#command-summary)
-* [Customer Commands](#customer-commands-1)
-* [Order Commands](#order-commands-1)
-* [Other Commands](#other-commands-1)
+   - [Customer Commands](#c-command)
+   - [Order Commands](#o-command)
+   - [Other Commands](#others)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -288,7 +290,7 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 
-### Editing an order: `edit-o`
+### <a id="edit-o"></a>Editing an order : `edit-o`
 
 Updates fields of an existing order. Any field you specify replaces the previous value; other fields stay unchanged.
 
@@ -310,7 +312,7 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADD
 * `edit-o 1 s/READY` — marks the first pizza order in the search results as ready.
 * `edit-o 1 i/Salad at/2026-05-01 1800 a/Blk 123 Main Street` — updates item, delivery time, and address for the first order in the current list.
 
-### Listing all orders : `list-o`
+### <a id="list-o"></a>Listing all orders : `list-o`
 
 Shows a list of all orders in the address book.
 
