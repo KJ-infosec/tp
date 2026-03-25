@@ -127,7 +127,8 @@ class JsonAdaptedPerson {
             throw new IllegalValueException("Invalid UUID format for person: " + id);
         }
 
-        return new Person(modelId, modelName, modelPhone, modelFacebook, modelInstagram, modelAddress, modelRemark, modelTags);
+        return new Person(modelId, modelName, modelPhone, modelFacebook, modelInstagram,
+                modelAddress, modelRemark, modelTags);
     }
 
 }
