@@ -55,6 +55,25 @@ public class OrderList {
     }
 
     /**
+     * Replaces the given order {@code target} in the list with {@code editedOrder}.
+     * {@code target} must exist in the list.
+     * The order identity of {@code editedOrder} must not be the same as another existing order in the list.
+     */
+    public void setOrder(Order target, Order editedOrder) {
+        requireNonNull(target, editedOrder);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new OrderNotFoundException();
+        }
+
+        if (!target.isSameOrder(editedOrder) && contains(editedOrder)) {
+            throw new DuplicateOrderException();
+        }
+
+        internalList.set(index, editedOrder);
+    }
+
+    /**
      * Replaces the contents of this list with {@code orders}.
      */
     public void setOrders(List<Order> orders) {
