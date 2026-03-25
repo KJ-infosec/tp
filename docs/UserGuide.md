@@ -89,7 +89,7 @@ Format: `help`
 
 Adds a customer to the customer database.
 
-Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
+Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * `NAME` is mandatory. It should only contain alphanumeric characters, spaces, and apostrophes (e.g., Mary O'Connor). It cannot be blank.
 * `PHONE` must be a numeric string between 8 and 15 digits long (e.g., 91234567 or 60123456789).
@@ -100,7 +100,7 @@ Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r
 
 <box type="important" seamless>
 
-**Note:** A customer must have **at least one** contact method (`PHONE`, `INSTAGRAM`, `FACEBOOK` or `ADDRESS`). The command will fail and show an error message if all contact methods are missing.
+**Note:** A customer must have **at least one** contact method (`p/PHONE`, `ig/INSTAGRAM`, `fb/FACEBOOK` or `a/ADDRESS`). The command will fail and show an error message if all contact methods are missing.
 
 </box>
 
@@ -144,6 +144,14 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
 * Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* You can clear optional single-value fields by providing the prefix with no value:
+  * `p/` clears phone
+  * `ig/` clears Instagram
+  * `fb/` clears Facebook
+  * `a/` clears address
+  * `r/` clears remark
+* `n/` cannot be empty. Use `n/NEW_NAME` to change name.
+* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). If not, the edit is rejected.
 * When editing tags, the existing tags of the customer will be removed i.e adding of tags is not cumulative.
 * You can remove all the customer’s tags by typing `t/` without
     specifying any tags after it.
@@ -151,6 +159,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
 Examples:
 *  `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd customer to be `Betsy Crower` and clears all existing tags.
+*  `edit 3 ig/ r/` Clears Instagram and remark for the 3rd customer.
+*  `edit 4 p/ fb/ ig/ a/` Fails if this would remove all contact methods from the 4th customer.
 
 </div>
 
