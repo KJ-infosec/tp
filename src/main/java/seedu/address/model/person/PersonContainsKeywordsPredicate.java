@@ -50,6 +50,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
 
     private boolean testGeneral(Person person) {
+        assert person != null : "Person must be non-null for search";
         if (searchPhrase.isEmpty()) {
             return false;
         }
@@ -65,6 +66,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     private boolean testSpecific(Person person) {
+        assert person != null : "Person must be non-null for search";
+        assert searchType != null : "Field-specific search requires a search type";
         if (searchPhrase.isEmpty()) {
             return false;
         }

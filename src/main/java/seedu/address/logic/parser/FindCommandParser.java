@@ -55,6 +55,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     "Please only provide one prefix at a time.\n" + FindCommand.MESSAGE_USAGE));
         }
+        assert prefixCount == 1 : "Prefixed find must have exactly one active prefix";
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             return new FindCommand(new PersonContainsKeywordsPredicate(
                     getNonEmptyValue(argMultimap, PREFIX_NAME),
@@ -106,6 +107,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     private String getNonEmptyValue(ArgumentMultimap argMultimap, Prefix prefix) throws ParseException {
         requireNonNull(argMultimap);
         requireNonNull(prefix);
+        assert argMultimap.getValue(prefix).isPresent() : "getNonEmptyValue requires prefix to be present";
         String value = argMultimap.getValue(prefix).get().trim();
         if (value.isEmpty()) {
             throw new ParseException(
