@@ -15,33 +15,35 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 
 ## Table of Contents
+
 1. [Quick start](#quick-start)
 2. [Features](#features)
-* [Viewing help: help](#viewing-help--help)
-3. [Customer command](#customer-commands)
-* [Adding a customer: add](#adding-a-customer--add)
-* [Listing all customers: list](#listing-all-customers--list)
-* [Editing a customer: edit](#editing-a-customer--edit)
-* [Finding customers: find](#finding-customers--find)
-* [Deleting a customer: delete](#deleting-a-customer--delete)
-4. [Order command](#order-commands)
-* [Adding an order: order](#adding-an-order--order)
-* [Finding orders: find-o](#finding-orders--find-o)
-* [Listing all orders: list-o](#listing-all-orders--list-o)
-* [Deleting an order: delete-o](#deleting-an-order--delete-o)
-5. [Other command](#order-commands)
-* [Clearing all entries: clear](#clearing-all-entries--clear)
-* [Exiting the program: exit](#exiting-the-program--exit)
-6. [Data storage](#data-storage)
-* [Saving the data](#saving-the-data)
-* [Editing the data file](#editing-the-data-file)
-* [Archiving the data [coming in v2.0]](#archiving-data-files-coming-in-v20)
+   - [Viewing help: `help`](#viewing-help)
+3. [Customer Commands](#customer-commands)
+   - [Adding a customer: `add`](#add)
+   - [Listing all customers: `list`](#list)
+   - [Editing a customer: `edit`](#edit)
+   - [Finding customers: `find`](#find)
+   - [Deleting a customer: `delete`](#delete)
+4. [Order Commands](#order-commands)
+   - [Adding an order: `order`](#order)
+   - [Finding orders: `find-o`](#find-o)
+   - [Editing an order: `edit-o`](#edit-o)
+   - [Listing all orders: `list-o`](#list-o)
+   - [Deleting an order: `delete-o`](#delete-o)
+5. [Other Commands](#other-commands)
+   - [Clearing all entries: `clear`](#clear)
+   - [Exiting the program: `exit`](#exit)
+6. [Data Storage](#data-storage)
+   - [Saving the data](#saving-data)
+   - [Editing the data file](#edit-data)
+   - [Archiving data files `[coming in v2.0]`](#archive-data)
 7. [FAQ](#faq)
 8. [Known issues](#known-issues)
 9. [Command summary](#command-summary)
-* [Customer Commands](#customer-commands-1)
-* [Order Commands](#order-commands-1)
-* [Other Commands](#other-commands-1)
+   - [Customer Commands](#c-command)
+   - [Order Commands](#o-command)
+   - [Other Commands](#others)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -298,9 +300,27 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 
-</div>
+### <a id="edit-o"></a>Editing an order : `edit-o`
 
-<div class="section-spacing">
+Updates fields of an existing order. Any field you specify replaces the previous value; other fields stay unchanged.
+
+Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DELIVERY_ADDRESS] [s/STATUS]`
+
+* Edits the order at the specified `ORDER_INDEX`. The index refers to the order number shown in the **currently displayed order list**. The index **must be a positive integer**
+* **At least one** of `i/`, `q/`, `at/`, `a/`, or `s/` must be provided. Omitting all of them is not allowed.
+* The order **stays with the same customer**; you cannot reassign an order to another customer with this command.
+* Field rules are the same as when using **`order`** (see **Adding an order** above):
+  * `ITEM_NAME` should contain only alphanumeric characters and spaces, and cannot be blank.
+  * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
+  * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
+  * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
+  * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
+* After a successful edit, the full order list is shown again.
+
+**Examples:**
+* `edit-o 2 q/5` — changes the quantity of the 2nd order in the list to `5`.
+* `edit-o 1 s/READY` — marks the first pizza order in the search results as ready.
+* `edit-o 1 i/Salad at/2026-05-01 1800 a/Blk 123 Main Street` — updates item, delivery time, and address for the first order in the current list.
 
 ### <a id="list-o"></a>Listing all orders : `list-o`
 
@@ -421,12 +441,11 @@ Action     | Format, Examples
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
-**Find** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
-**List** | `list-o`
-**Delete** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
-
-</div>
+**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
+**Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
+**Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`
+**List Orders** | `list-o`
+**Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
 
 ### <a id="others"></a>Other Commands
 
