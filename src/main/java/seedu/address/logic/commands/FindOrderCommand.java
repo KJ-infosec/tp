@@ -44,7 +44,7 @@ public class FindOrderCommand extends Command {
 
         Map<OrderContainsKeywordsPredicate.SearchType, String> resolveMap = new HashMap<>();
 
-        for(Map.Entry<OrderContainsKeywordsPredicate.SearchType, String> entry : predicate.getSearchMap().entrySet()) {
+        for (Map.Entry<OrderContainsKeywordsPredicate.SearchType, String> entry : predicate.getSearchMap().entrySet()) {
             OrderContainsKeywordsPredicate.SearchType searchType = entry.getKey();
             String searchPhrase = entry.getValue();
             if (searchType == OrderContainsKeywordsPredicate.SearchType.CUSTOMER) {
