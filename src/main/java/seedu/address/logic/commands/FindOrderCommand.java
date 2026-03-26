@@ -67,11 +67,11 @@ public class FindOrderCommand extends Command {
 
     private String resolveCustomerUuid(Model model, String keyword) throws CommandException {
         if (keyword.contains("-")) {
-            // It's already a UUID string
             return keyword;
-        } else{
-            // It's an index number, convert to UUID
-            int oneBased = Integer.parseInt(keyword);
+        }
+
+        try {
+            int oneBased = Integer.parseInt(keyword.trim()); // Trim to be safe
             int zeroBased = oneBased - 1;
 
             if (zeroBased < 0 || zeroBased >= model.getFilteredPersonList().size()) {
@@ -79,8 +79,9 @@ public class FindOrderCommand extends Command {
             }
 
             return model.getFilteredPersonList().get(zeroBased).getId().toString();
+        } catch (NumberFormatException e) {
+            throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
     }
 
     @Override
