@@ -477,7 +477,7 @@ Use case ends.
 
 **MSS:**
 
-1. User enters the order command with order details.
+1. User enters the order command along with the order details.
 
 2. BZNUS stores the new order.
 
@@ -497,9 +497,9 @@ Use case ends.
 
     Use case resumes from step 2.
 
-* 3a. BZNUS currently displays orders.
+* 3a. BZNUS detects that the newly created order satisfies the criteria of the currently displayed order list.
 
-    * 3a1. If the newly created order satisfies the criteria of the list displayed, BZNUS updates the displayed list to include it.
+    * 3a1. BZNUS updates the displayed list to include the order.
 
     Use case ends.
 
@@ -508,14 +508,17 @@ Use case ends.
 **Use case: UC07 - Delete order**\
 **Guarantees**:
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
+* Only orders that are currently displayed can be deleted.
 
 **MSS:**
 
-1. User enters the delete order command with the order to be deleted.
+1. User enters the delete order command along with the order to be deleted.
 
-2. BZNUS deletes the specified order.
+2. BZNUS removes the specified order from the system.
 
 3. BZNUS shows a success message to indicate the order is deleted.
+
+4. BZNUS updates the displayed list to exclude the deleted order.
 
 Use case ends.
 
@@ -530,12 +533,6 @@ Use case ends.
   Steps 1a1-1a2 are repeated until the information entered is correct.
 
   Use case resumes from step 2.
-
-* 3a. BZNUS currently displays the deleted order.
-
-    * 3a1. BZNUS removes the order from the displayed list.
-
-  Use case ends.
 
 </div>
 
