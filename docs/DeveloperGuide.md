@@ -347,7 +347,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC01 - Add Customer**
 
-**MSS**
+**MSS:**
 
 1. Seller chooses to add a new customer.
 
@@ -361,7 +361,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
 - 3a. BZNUS detects invalid or missing mandatory data (e.g., blank name).
 
@@ -381,8 +381,8 @@ Use case ends.
 
 ---
 
-**Use case: UC02 - Delete Customer**
-**Guarantees**:
+**Use case: UC02 - Delete Customer**\
+**Guarantees:**
 * If the deletion cannot be completed (e.g. invalid customer index), the system does not remove any customer.
 * Only customers that are currently displayed can be deleted.
 
@@ -481,7 +481,7 @@ Use case ends.
 ---
 
 **Use case: UC06 - Add order**\
-**Guarantees**:
+**Guarantees:**
 * The system records the order only if the provided order information is valid.
 
 **MSS:**
@@ -511,7 +511,7 @@ Use case ends.
 ---
 
 **Use case: UC07 - Delete order**\
-**Guarantees**:
+**Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
 * Only orders that are currently displayed can be deleted.
 
