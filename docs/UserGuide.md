@@ -205,7 +205,7 @@ Examples:
 Finds customers whose details match the given keywords. You can search across all fields or target a specific field using prefixes.
 
 #### General Search
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`.
 * All fields are searched.
@@ -313,6 +313,12 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 * * `find-o i/burger a/Kent Ridge` - Look for orders with item keyword "burger" and delivery address "Kent Ridge"
+
+<box type="tip" seamless>
+
+**Tip:** Besides using `c/`, you can also click on a customer entry in the list to view all orders of that customer.
+
+</box>
 
 </div>
 
