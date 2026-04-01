@@ -38,6 +38,12 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredOrders = new FilteredList<>(this.addressBook.getOrderList());
+
+        // Startup filter: show only PREPARING + READY orders
+        filteredOrders.setPredicate(order ->
+                order.getStatus().value.equals("PREPARING")
+                        || order.getStatus().value.equals("READY")
+        );
     }
 
     public ModelManager() {
