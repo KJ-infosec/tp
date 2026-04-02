@@ -51,7 +51,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_REMARK + "REMARK] "
             + "[" + PREFIX_TAG + "TAG]...\n\n"
             + "Note:\n"
-            + "- INDEX must be a positive integer\n"
+            + "- INDEX must be a positive integer.\n"
             + "- " + PREFIX_NAME + " must include a value if provided; names cannot be cleared.\n"
             + "- You may clear any other fields by supplying their prefixes with no value "
             + "(e.g. " + PREFIX_PHONE + ", "
