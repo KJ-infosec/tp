@@ -71,7 +71,7 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
         Quantity quantity = ParserUtil.parseQuantity(argMultimap.getValue(PREFIX_QUANTITY).get());
         DeliveryTime deliveryTime = ParserUtil.parseDeliveryTime(argMultimap.getValue(PREFIX_DATETIME).get());
 
-        boolean isPast = !DeliveryTime.isInFuture(deliveryTime.value);
+        boolean isPast = !deliveryTime.isInFuture();
 
         Optional<Address> address = argMultimap.getValue(PREFIX_ADDRESS)
                 .isPresent()

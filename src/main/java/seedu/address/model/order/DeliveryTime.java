@@ -22,7 +22,10 @@ public class DeliveryTime {
             "\\d{4}-\\d{2}-\\d{2} \\d{4}";
 
     private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm")
+                    .withResolverStyle(java.time.format.ResolverStyle.STRICT);
+
+    private final LocalDateTime deliveryTime;
 
     public final String value;
 
@@ -34,8 +37,10 @@ public class DeliveryTime {
     public DeliveryTime(String datetime) {
         requireNonNull(datetime);
         checkArgument(isValidFormat(datetime), MESSAGE_CONSTRAINTS);
-        checkArgument(isValidDate(datetime), MESSAGE_CONSTRAINTS);
-        value = datetime;
+        checkArgument(isValidDate(datetime), MESSAGE_CONSTRAINTS_VALID);
+
+        this.value = datetime;
+        this.deliveryTime = LocalDateTime.parse(datetime, FORMATTER);
     }
 
     /**
@@ -52,7 +57,7 @@ public class DeliveryTime {
         try {
             LocalDateTime.parse(test, FORMATTER);
             return true;
-        } catch (DateTimeParseException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -60,10 +65,9 @@ public class DeliveryTime {
     /**
      * Returns true if delivery time is after current system time.
      */
-    public static boolean isInFuture(String test) {
+    public boolean isInFuture() {
         try {
-            LocalDateTime dt = LocalDateTime.parse(test, FORMATTER);
-            return dt.isAfter(LocalDateTime.now());
+            return deliveryTime.isAfter(LocalDateTime.now());
         } catch (DateTimeParseException e) {
             return false;
         }
