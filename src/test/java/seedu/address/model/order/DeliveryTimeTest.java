@@ -29,12 +29,6 @@ public class DeliveryTimeTest {
     }
 
     @Test
-    public void constructor_pastDate_throwsIllegalArgumentException() {
-        String past = LocalDateTime.now().minusDays(1).format(FORMATTER);
-        assertThrows(IllegalArgumentException.class, () -> new DeliveryTime(past));
-    }
-
-    @Test
     public void isValidFormat() {
         // null -> throws
         assertThrows(NullPointerException.class, () -> DeliveryTime.isValidFormat(null));
@@ -52,14 +46,14 @@ public class DeliveryTimeTest {
     }
 
     @Test
-    public void isInFuture() {
+    public void isValidDate() {
         // past
         String past = LocalDateTime.now().minusHours(1).format(FORMATTER);
-        assertFalse(DeliveryTime.isInFuture(past));
+        assertTrue(DeliveryTime.isValidDate(past));
 
         // future
         String future = LocalDateTime.now().plusHours(1).format(FORMATTER);
-        assertTrue(DeliveryTime.isInFuture(future));
+        assertTrue(DeliveryTime.isValidDate(future));
     }
 
     @Test

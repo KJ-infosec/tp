@@ -9,14 +9,14 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Represents a delivery date and time for an Order.
- * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)} and {@link #isInFuture(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)} and {@link #isValidDate(String)}
  */
 public class DeliveryTime {
     public static final String MESSAGE_CONSTRAINTS =
-            "Delivery time must be in the format: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359.";
+            "Delivery time must be in the format: yyyy-mm-dd hhmm, e.g. 2026-05-20 2300.";
 
-    public static final String MESSAGE_CONSTRAINTS_FUTURE =
-            "Delivery time must be valid and in the future.";
+    public static final String MESSAGE_CONSTRAINTS_VALID =
+            "Delivery time must be valid.";
 
     public static final String VALIDATION_REGEX =
             "\\d{4}-\\d{2}-\\d{2} \\d{4}";
@@ -34,7 +34,6 @@ public class DeliveryTime {
     public DeliveryTime(String datetime) {
         requireNonNull(datetime);
         checkArgument(isValidFormat(datetime), MESSAGE_CONSTRAINTS);
-        checkArgument(isInFuture(datetime), MESSAGE_CONSTRAINTS_FUTURE);
         value = datetime;
     }
 
@@ -48,12 +47,24 @@ public class DeliveryTime {
     /**
      * Returns true if datetime is after the current system time.
      */
+    public static boolean isValidDate(String test) {
+        try {
+            LocalDateTime.parse(test, FORMATTER);
+            return true;
+        } catch (DateTimeParseException e) {
+            // Should never happen if format already validated
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if datetime is after the current system time.
+     */
     public static boolean isInFuture(String test) {
         try {
             LocalDateTime dt = LocalDateTime.parse(test, FORMATTER);
             return dt.isAfter(LocalDateTime.now());
         } catch (DateTimeParseException e) {
-            // Should never happen if format already validated
             return false;
         }
     }

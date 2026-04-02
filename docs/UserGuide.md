@@ -274,11 +274,10 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 * Adds an order to the customer at the specified `INDEX`.
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
-* `ITEM_NAME` must contain only alphanumeric characters, spaces, and basic punctuation, and cannot be blank.
+* `ITEM_NAME` must contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and cannot be blank.
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
-* `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
-* If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.\
-If the customer has no stored address, you will be prompted to enter a delivery address for the order.
+* `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format. If the time entered is not in the future, the order will still be added but a warning will be shown.
+* If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used. If the customer has no stored address, you will be prompted to enter a delivery address for the order.
 * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
 
 <box type="tip" seamless>
@@ -328,7 +327,7 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
 * **At least one** of `i/`, `q/`, `at/`, `a/`, or `s/` must be provided. Omitting all of them is not allowed.
 * The order **stays with the same customer**; you cannot reassign an order to another customer with this command.
 * Field rules are the same as when using **`order`** (see **Adding an order** above):
-  * `ITEM_NAME` should contain only alphanumeric characters and spaces, and cannot be blank.
+  * `ITEM_NAME` must contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and cannot be blank.
   * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
   * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
   * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
