@@ -181,6 +181,26 @@ This section describes some noteworthy details on how certain features are imple
 
 <div class="section-spacing">
 
+### Order management
+
+The `Model` component manages `Order` entities using an `OrderList`, which stores all orders in the address book. Each `Order` records the customer’s `UUID` rather than holding a direct reference to a `Person` object. `Person` objects are replaced wholesale when edited, so storing a reference would become outdated. Using `UUID` keeps orders stable and avoids cascading updates when customer details change.
+
+An `Order` stores the following fields:
+* Customer’s `UUID`
+* `Item`
+* `Quantity`
+* `DeliveryTime`
+* `Address`
+* `Status`
+
+These fields (except the customer’s `UUID`) are implemented as domain classes, allowing each to encapsulate its own validation and formatting logic. Optional fields, `Address` and `Status`, allow the system to fall back to the customer’s saved address or a default status when these values are not provided by the user.
+
+`OrderList` wraps an internal `ObservableList<Order>`, ensuring that UI components automatically update whenever orders are added or modified. This design integrates the new `Order` entity into the existing model while minimizing coupling.
+
+</div>
+
+<div class="section-spacing">
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -558,12 +578,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
-* **Tag**: A customizable, color-coded label assigned to a customer to quickly identify specific traits, preferences, or dietary restrictions (e.g., "vegan", "VIP", "corporate").
+* **API (Application Programming Interface)**: The set of methods and interfaces provided by a component for other components to interact with it.
 * **CLI (Command Line Interface)**: A text-based user interface used to interact with the software by typing commands.
+* **DeliveryTime**: The scheduled date and time at which an order should be delivered.
+* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through graphical elements like windows and buttons.
+* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home. 
+* **Item**: Represents the name of the product being ordered.
 * **JSON (JavaScript Object Notation)**: A lightweight, text-based, human-readable format used for storing the application's data locally.
+* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Order**: A customer’s request for an item, including quantity, delivery details, and status.
+* **OrderList**: An internal data structure that stores and manages all `Order` objects in the system.
+* **Person**: Represents a customer in BZNUS. Each `Person` stores the customer’s contact details and is associated with `Order` objects via a `UUID`.
+* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Quantity**: The number of items ordered. Must be a valid positive integer.
+* **Status**: The current state of an order, restricted to one of `PREPARING`, `READY`, `DELIVERED`, or `CANCELLED`. Defaults to `PREPARING` if not specified.
+* **Tag**: A customizable, color-coded label assigned to a customer to quickly identify specific traits, preferences, or dietary restrictions (e.g., "vegan", "VIP", "corporate").
+* **UUID (Universally Unique Identifier)**: A unique identifier assigned to each customer, used to associate an order with a specific customer without storing a direct reference.
 
 --------------------------------------------------------------------------------------------------------------------
 
