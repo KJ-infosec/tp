@@ -1,17 +1,16 @@
 package seedu.address.logic.parser;
 
+import java.util.HashMap;
+import java.util.Map;
 import static java.util.Objects.requireNonNull;
+import java.util.Optional;
+
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.address.logic.commands.FindOrderCommand;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import seedu.address.logic.commands.FindOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.order.OrderContainsKeywordsPredicate;
 import seedu.address.model.order.Status;
@@ -31,6 +30,9 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER, PREFIX_STATUS);
 
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER, PREFIX_STATUS);
+
         Optional<String> itemSearch = argMultimap.getValue(PREFIX_ITEM);
         Optional<String> addressSearch = argMultimap.getValue(PREFIX_ADDRESS);
         Optional<String> customerSearch = argMultimap.getValue(PREFIX_CUSTOMER);
@@ -46,7 +48,7 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
             throw new ParseException("Address search value cannot be empty.");
         }
         if (customerSearch.isPresent() && customerSearch.get().isBlank()) {
-            throw new ParseException("Customer search value cannot be empty.");
+            throw new ParseException("Customer id search value cannot be empty.");
         }
         if (statusSearch.isPresent() && statusSearch.get().isBlank()) {
             throw new ParseException("Status search value cannot be empty.");

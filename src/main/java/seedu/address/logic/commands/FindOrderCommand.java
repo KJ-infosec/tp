@@ -1,13 +1,12 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-
 import java.util.HashMap;
 import java.util.Map;
+import static java.util.Objects.requireNonNull;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
@@ -23,7 +22,7 @@ public class FindOrderCommand extends Command {
     public static final String COMMAND_WORD = "find-o";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all orders whose item, address, status, "
-            + "or customerId contain the specified search phrase (case-insensitive) "
+            + "or customer contain the specified search phrase (case-insensitive) "
             + "and displays the number of matching orders.\n"
             + "Parameters: i/ITEM_NAME | a/ADDRESS | c/CUSTOMER_ID | s/STATUS\n"
             + "Example: " + COMMAND_WORD + " i/pizza";
