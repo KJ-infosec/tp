@@ -428,6 +428,12 @@ BZNUS data is saved in the hard disk automatically after any command that change
 
 BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
+<box type="important" seamless>
+
+**Important:** Only edit `addressbook.json` when BZNUS is **not** running. If you modify the file while the app is open, your changes will not be loaded into the current session. When you next run a command that saves data (e.g. `exit`), the app will overwrite the file and discard your manual changes.
+
+</box>
+
 <box type="warning" seamless>
 
 **Caution:**
