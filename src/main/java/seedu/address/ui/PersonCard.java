@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -58,6 +60,11 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+
+        configureWrappingLabel(name);
+        configureWrappingLabel(address);
+        configureWrappingLabel(remark);
+
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         name.setMinWidth(0);

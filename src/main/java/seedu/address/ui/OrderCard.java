@@ -19,6 +19,8 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label item;
     @FXML
+    private Label quantity;
+    @FXML
     private Label address;
     @FXML
     private Label date;
@@ -41,6 +43,8 @@ public class OrderCard extends UiPart<Region> {
         address.setText("Address: " + order.getAddress().value);
 
         date.setText("Date: " + order.getDeliveryTime().value);
+        configureWrappingLabel(item);
+        configureWrappingLabel(address);
 
         status.setText("Status: " + order.getStatus().value);
     }
@@ -63,5 +67,19 @@ public class OrderCard extends UiPart<Region> {
         default:
             status.getStyleClass().add("status-unknown");
         }
+
+        item.setText("Order: " + order.getItem().value);
+        quantity.setText("Quantity: " + order.getQuantity().value);
+
+        address.setText("Address: " + order.getAddress().value);
+
+        date.setText("Date: " + order.getDeliveryTime().value);
+
+        status.setText("Status: " + order.getStatus().value);
+    }
+
+    private void configureWrappingLabel(Label label) {
+        label.setWrapText(true);
+        label.setMaxWidth(Double.MAX_VALUE);
     }
 }

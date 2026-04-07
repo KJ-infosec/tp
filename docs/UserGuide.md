@@ -58,7 +58,8 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
-   ![Ui](images/Ui.png)
+   ![Ui](images/Ui.png)<br>
+On startup, the order list is automatically filtered to display only orders with the statuses `PREPARING` or `READY`.
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -165,6 +166,19 @@ Examples:
 Shows a list of all customers in the customer database.
 
 Format: `list`
+
+<box type="tip" seamless>
+
+**Tip:** This is a useful command to reset filters on the customer list at any time.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tag display:** Very long tags may be truncated in the customer card for readability.
+Hover over a truncated tag to view its full text in a tooltip.
+
+</box>
 
 </div>
 
@@ -364,6 +378,12 @@ Shows a list of all orders in the order database.
 
 Format: `list-o`
 
+<box type="tip" seamless>
+
+**Tip:** This is a useful command to reset filters on the order list at any time.
+
+</box>
+
 </div>
 
 ### <a id="delete-o"></a>Deleting an order : `delete-o`
@@ -420,6 +440,12 @@ BZNUS data is saved in the hard disk automatically after any command that change
 ### <a id="edit-data"></a>Editing the data file
 
 BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<box type="important" seamless>
+
+**Important:** Only edit `addressbook.json` when BZNUS is **not** running. If you modify the file while the app is open, your changes will not be loaded into the current session. When you next run a command that saves data (e.g. `exit`), the app will overwrite the file and discard your manual changes.
+
+</box>
 
 <box type="warning" seamless>
 
