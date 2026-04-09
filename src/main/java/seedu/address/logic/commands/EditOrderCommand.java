@@ -40,7 +40,7 @@ public class EditOrderCommand extends Command {
             + "[" + PREFIX_QUANTITY + "QUANTITY] "
             + "[" + PREFIX_DATETIME + "DATETIME] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_STATUS + "STATUS]...\n"
+            + "[" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ITEM + "Pizza "
             + PREFIX_QUANTITY + "3 "
@@ -83,12 +83,12 @@ public class EditOrderCommand extends Command {
         Order orderToEdit = lastShownList.get(index.getZeroBased());
         Order editedOrder = createEditedOrder(orderToEdit, editOrderDescriptor);
 
-        model.setOrder(orderToEdit, editedOrder);
-
         Person customer = model.findPersonById(orderToEdit.getCustomerId());
         if (customer == null) {
             throw new CommandException(MESSAGE_UNKNOWN_CUSTOMER);
         }
+
+        model.setOrder(orderToEdit, editedOrder);
 
         String customerName = customer.getName().toString();
         return new CommandResult(String.format(
