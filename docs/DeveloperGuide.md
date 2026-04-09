@@ -286,6 +286,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 </div>
 
+
 <div class="section-spacing">
 
 ### Editing data feature (`edit` and `edit-o`)
@@ -343,7 +344,7 @@ The edit command updates fields of the customer at `INDEX` in the currently disp
 
 <div class="section-spacing">
 
-### \[Proposed\] Undo/redo feature
+### Undo/Redo feature
 
 #### Proposed Implementation
 
