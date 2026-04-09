@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +73,7 @@ public class EditOrderCommand extends Command {
         if (!editOrderDescriptor.isAnyFieldEdited()) {
             throw new CommandException(MESSAGE_NOT_EDITED);
         }
-        
+
         List<Order> lastShownList = model.getFilteredOrderList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
