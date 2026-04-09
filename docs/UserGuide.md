@@ -57,7 +57,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 3. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
-   A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
+   A GUI like this should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)<br>
 On startup, the order list is automatically filtered to display only orders with the statuses `PREPARING` or `READY`.
 
@@ -72,7 +72,7 @@ On startup, the order list is automatically filtered to display only orders with
 
    * `delete 3` : Deletes the 3rd customer shown in the current list.
 
-   * `clear` : Deletes all customers and their orders.
+   * `clear` : Shows a confirmation message before deleting all customers and their orders.
 
    * `exit` : Exits the app.
 
@@ -98,7 +98,7 @@ On startup, the order list is automatically filtered to display only orders with
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list` and `exit`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines. Space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -111,6 +111,7 @@ On startup, the order list is automatically filtered to display only orders with
 Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
+* The keyword `help` is case-insensitive
 
 Format: `help`
 
@@ -126,23 +127,23 @@ Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
-* `NAME` is mandatory. It must contain only alphanumeric characters, spaces, and apostrophes (e.g. Mary O'Connor). It cannot be blank.
-* `PHONE` must be 8 to 15 digits long and contain only numbers (e.g. 91234567 or 60123456789). No spaces, '+' sign, or other symbols are allowed.
+* `NAME` is mandatory. It must be 1 to 100 characters long, start with an alphanumeric character, and contain only letters, numbers, spaces, apostrophes (`'`), slashes (`/`), and hyphens (`-`).
+* `PHONE` must be 7 to 15 digits long and contain only numbers (e.g. 9123456 or 60123456789). No spaces, '+' sign, or other symbols are allowed.
 * `INSTAGRAM` must be 1 to 30 characters long and contain only letters, numbers, underscores, and periods. It must not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
 * `FACEBOOK` must be 5 to 50 characters long and contain only letters, numbers, and periods. It must not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
-* `ADDRESS` can be any non-blank string.
-* `REMARK` can be any non-blank string.
+* `ADDRESS` can be any non-blank string, but cannot exceed 200 characters.
+* `REMARK` can be any non-blank string, but cannot exceed 500 characters.
 * `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens.
 
 <box type="important" seamless>
 
-**Note:** A customer must have **at least one** contact method (`p/PHONE`, `ig/INSTAGRAM`, `fb/FACEBOOK` or `a/ADDRESS`). The command will fail and show an error message if all contact methods are missing.
+**Note:** A customer must have **at least one** contact method: `p/PHONE`, `ig/INSTAGRAM`, or `fb/FACEBOOK`. The command will fail and show an error message if all contact methods are missing.
 
 </box>
 
 <box type="important" seamless>
 
-**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. Different customers may share contact details (e.g. phone, Facebook, Instagram, or address).
+**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. Different customers may share contact details (e.g. phone, Facebook, or Instagram).
 
 </box>
 
@@ -153,7 +154,7 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01 r/prefers weekend delivery t/VIP t/regular`
+* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01 r/prefers weekend delivery t/halal t/regular`
 * `add n/Betsy Crowe t/friend fb/betsy.crowe a/Blk 456, Bedok North r/allergic to peanuts`
 * `add n/Tech Corp SG p/67778888 ig/techcorp.sg a/Tech Tower, Level 12 r/Invoicing required`
 
@@ -200,7 +201,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * `a/` clears address
   * `r/` clears remark
 * `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name.
-* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). Otherwise, the edit is rejected.
+* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, or `fb/`). Otherwise, the edit is rejected.
 * Tags are handled as a set:
   * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
   * `t/` clears all existing tags.
@@ -411,8 +412,17 @@ Format: `delete-o ORDER_INDEX`
 ### <a id="clear"></a>Clearing all entries : `clear`
 
 Clears all customers and their orders from BZNUS.
+To prevent accidental data loss, this command requires a specific confirmation keyword to execute.
 
-Format: `clear`
+Format:
+* `clear` (shows confirmation message)
+* `clear CONFIRM` (confirms and permanently deletes all data)
+
+<box type="important" seamless>
+
+**Note:** This action is irreversible. Once you run clear CONFIRM, all customer profiles, order histories, and related data will be permanently removed from the application.
+
+</box>
 
 </div>
 
@@ -507,7 +517,7 @@ _Details coming soon ..._
 |------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Order**    | `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` |
 | **Find Order**   | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`                                                                                                                  |
-| **Edit Order**   | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`                                                           |
+| **Edit Order**   | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`                                                  |
 | **List Orders**  | `list-o`                                                                                                                                                                              |
 | **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`                                                                                                                                        |
 

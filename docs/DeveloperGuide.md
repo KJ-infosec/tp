@@ -179,16 +179,90 @@ This section describes some noteworthy details on how certain features are imple
 
 <div class="section-spacing">
 
-### Find Order feature
-#### Implementation
+### Order management
 
-The find order(find-o) feature is facilitated by `OrderContainsKeywordsPredicate` and related classes.It allows users to search for orders based on different criteria (item, address, customer index, order status) with AND logic, meaning that only orders that match all specified criteria will be returned in the search results.
+The `Model` component manages `Order` entities using an `OrderList`, which stores all orders in the address book. Each `Order` records the customer’s `UUID` rather than holding a direct reference to a `Person` object. `Person` objects are replaced wholesale when edited, so storing a reference would become outdated. Using `UUID` keeps orders stable and avoids cascading updates when customer details change.
 
-The feature involves three main componenets:
+An `Order` stores the following fields:
+* Customer’s `UUID`
+* `Item`
+* `Quantity`
+* `DeliveryTime`
+* `Address`
+* `Status`
 
-* `FindOrderCommandParser` — Parses input arguments and builds a map of search criteria.
-* `FindOrderCommand` — Executes the search, resolves customer identifiers, and applies filtering.
-* `OrderContainsKeywordsPredicate` — Tests whether each order matches all search criteria.
+These fields (except the customer’s `UUID`) are implemented as domain classes, allowing each to encapsulate its own validation and formatting logic. Optional fields, `Address` and `Status`, allow the system to fall back to the customer’s saved address or a default status when these values are not provided by the user.
+
+`OrderList` wraps an internal `ObservableList<Order>`, ensuring that UI components automatically update whenever orders are added or modified. This design integrates the new `Order` entity into the existing model while minimizing coupling.
+
+</div>
+
+<div class="section-spacing">
+
+### Editing data feature (`edit` and `edit-o`)
+
+BZNUS supports editing both customer details and order details through separate commands:
+
+* Edit customer: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+* Edit order: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]`
+
+Both commands follow the same architecture pattern: **parse → validate → execute → commit → UI refresh**.
+
+#### Edit customer command (`edit`)
+
+The edit command updates fields of the customer at `INDEX` in the currently displayed customer list. At least one field must be provided.
+
+##### Implementation Overview
+
+1. `AddressBookParser` routes `edit` input to `EditCommandParser`.
+2. `EditCommandParser` parses index and optional prefixed fields into an `EditPersonDescriptor`.
+3. `EditCommand#execute(Model model)`: 
+    * resolves target customer from `model.getFilteredPersonList()`,
+    * applies descriptor updates to construct an edited `Person`,
+    * replaces original person in model,
+    * commits state and returns success message.
+
+<puml src="diagrams/EditCustomerSequenceDiagram.puml" alt="EditCustomerSequenceDiagram" />
+
+##### Validation Highlights
+
+* Index must be valid in filtered customer list.
+* At least one field must be edited.
+* Edited customer must still satisfy basic requirements(e.g., required contact constraints, no duplicate conflicting identity rules)
+
+#### Edit order command (`edit-o`)
+
+##### Implementation Overview
+
+1. `AddressBookParser` routes `edit-o` input to `EditOrderCommandParser`.
+2. `EditOrderCommandParser` parses index and optional order fields into an `EditOrderDescriptor`.
+3.  `EditOrderCommand#execute(Model model)`:
+    * resolves target order from `model.getFilteredOrderList()`,
+    * applies descriptor updates to construct an edited `Order`,
+    * replaces original order in model,
+    * commits state and returns success message.
+
+<puml src="diagrams/EditOrderSequenceDiagram.puml" alt="EditOrderSequenceDiagram" />
+
+##### Validation Highlights
+
+* Order index must be valid in filtered order list.
+* At least one order field must be provided.
+* New values must pass field-level validation.
+
+</div>
+
+<div class="section-spacing">
+
+### \[Proposed\] Undo/redo feature
+
+#### Proposed Implementation
+
+The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+
+* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
+* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
+* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
 
 These operations are exposed in the `Model` interface:
 
@@ -707,14 +781,14 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: First displayed customer has at least one contact method.
    
-   2. Test case: `edit 1 p/ fb/ ig/ a/Blk 123 Clementi Ave 2`<br>
-      Expected: First displayed customer's phone/Facebook/Instagram are cleared, with address set to "Blk 123 Clementi Ave 2". Success message shown.
+   2. Test case: `edit 1 p/ fb/ ig/test.ig`<br>
+      Expected: First displayed customer's phone/Facebook are cleared, with Instagram set to "test.ig". Success message shown.
    
 4. Editing a customer by **clearing all contact methods**
 
    1. Prerequisite: First displayed customer has at least one contact method.
    
-   2. Test case: `edit 1 p/ fb/ ig/ a/`<br>
+   2. Test case: `edit 1 p/ fb/ ig/`<br>
       Expected: Command fails with an error message indicating that at least one contact method must remain. No changes applied.
    
 5. Editing a customer **without providing any fields** to edit
