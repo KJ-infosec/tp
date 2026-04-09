@@ -34,7 +34,7 @@ public class OrderListPanel extends UiPart<Region> {
         orderListView.setCellFactory(listView -> new OrderListViewCell());
 
         orderListView.getItems().addListener((ListChangeListener<Order>) change -> updateOrdersHeader());
-        updateOrdersHeader(); 
+        updateOrdersHeader();
     }
 
     /**
