@@ -52,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         // Check at least one contact method is provided
         if (!hasAtLeastOneContactMethod(argMultimap, PREFIX_PHONE, PREFIX_FACEBOOK,
-                PREFIX_INSTAGRAM, PREFIX_ADDRESS)) {
+                PREFIX_INSTAGRAM)) {
             throw new ParseException(MESSAGE_MISSING_CONTACT_METHOD);
         }
 
