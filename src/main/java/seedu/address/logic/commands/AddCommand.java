@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -35,9 +36,8 @@ public class AddCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "At least one contact method must be provided: "
             + PREFIX_PHONE + ", "
-            + PREFIX_FACEBOOK + ", "
-            + PREFIX_INSTAGRAM + ", or "
-            + PREFIX_ADDRESS + ".\n"
+            + PREFIX_FACEBOOK + ", or "
+            + PREFIX_INSTAGRAM + ".\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_INSTAGRAM + "john_doe "
@@ -47,7 +47,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON =
             "A customer with the same name already exists in the database.";
 
-    private static final Logger logger = Logger.getLogger(AddCommand.class.getName());
+    private static final Logger logger = LogsCenter.getLogger(AddCommand.class);
     private final Person toAdd;
 
     /**

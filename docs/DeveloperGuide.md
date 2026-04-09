@@ -199,6 +199,61 @@ These fields (except the customer’s `UUID`) are implemented as domain classes,
 
 <div class="section-spacing">
 
+### Editing data feature (`edit` and `edit-o`)
+
+BZNUS supports editing both customer details and order details through separate commands:
+
+* Edit customer: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+* Edit order: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]`
+
+Both commands follow the same architecture pattern: **parse → validate → execute → commit → UI refresh**.
+
+#### Edit customer command (`edit`)
+
+The edit command updates fields of the customer at `INDEX` in the currently displayed customer list. At least one field must be provided.
+
+##### Implementation Overview
+
+1. `AddressBookParser` routes `edit` input to `EditCommandParser`.
+2. `EditCommandParser` parses index and optional prefixed fields into an `EditPersonDescriptor`.
+3. `EditCommand#execute(Model model)`: 
+    * resolves target customer from `model.getFilteredPersonList()`,
+    * applies descriptor updates to construct an edited `Person`,
+    * replaces original person in model,
+    * commits state and returns success message.
+
+<puml src="diagrams/EditCustomerSequenceDiagram.puml" alt="EditCustomerSequenceDiagram" />
+
+##### Validation Highlights
+
+* Index must be valid in filtered customer list.
+* At least one field must be edited.
+* Edited customer must still satisfy basic requirements(e.g., required contact constraints, no duplicate conflicting identity rules)
+
+#### Edit order command (`edit-o`)
+
+##### Implementation Overview
+
+1. `AddressBookParser` routes `edit-o` input to `EditOrderCommandParser`.
+2. `EditOrderCommandParser` parses index and optional order fields into an `EditOrderDescriptor`.
+3.  `EditOrderCommand#execute(Model model)`:
+    * resolves target order from `model.getFilteredOrderList()`,
+    * applies descriptor updates to construct an edited `Order`,
+    * replaces original order in model,
+    * commits state and returns success message.
+
+<puml src="diagrams/EditOrderSequenceDiagram.puml" alt="EditOrderSequenceDiagram" />
+
+##### Validation Highlights
+
+* Order index must be valid in filtered order list.
+* At least one order field must be provided.
+* New values must pass field-level validation.
+
+</div>
+
+<div class="section-spacing">
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -735,14 +790,14 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: First displayed customer has at least one contact method.
    
-   2. Test case: `edit 1 p/ fb/ ig/ a/Blk 123 Clementi Ave 2`<br>
-      Expected: First displayed customer's phone/Facebook/Instagram are cleared, with address set to "Blk 123 Clementi Ave 2". Success message shown.
+   2. Test case: `edit 1 p/ fb/ ig/test.ig`<br>
+      Expected: First displayed customer's phone/Facebook are cleared, with Instagram set to "test.ig". Success message shown.
    
 4. Editing a customer by **clearing all contact methods**
 
    1. Prerequisite: First displayed customer has at least one contact method.
    
-   2. Test case: `edit 1 p/ fb/ ig/ a/`<br>
+   2. Test case: `edit 1 p/ fb/ ig/`<br>
       Expected: Command fails with an error message indicating that at least one contact method must remain. No changes applied.
    
 5. Editing a customer **without providing any fields** to edit
