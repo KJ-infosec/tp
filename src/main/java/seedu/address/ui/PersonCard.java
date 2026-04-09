@@ -7,6 +7,8 @@ import java.util.function.Function;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -81,7 +83,7 @@ public class PersonCard extends UiPart<Region> {
         setOptionalLabel(remark, person.getRemark().map(r -> r.value), r -> r);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> tags.getChildren().add(createTagLabel(tag.tagName)));
 
         if (getRoot() instanceof VBox root) {
             tags.setMaxWidth(Double.MAX_VALUE);
@@ -92,6 +94,21 @@ public class PersonCard extends UiPart<Region> {
                 }
             });
         }
+    }
+
+    /**
+     * Creates a label for a tag with the given tag name. The label will have a tooltip showing the full tag name,
+     * and will truncate the displayed text with an ellipsis if it exceeds 160 pixels in width.
+     *
+     * @param tagName The name of the tag to create a label for.
+     * @return A {@code Label} representing the tag with the specified name.
+     */
+    private Label createTagLabel(String tagName) {
+        Label tagLabel = new Label(tagName);
+        tagLabel.setTooltip(new Tooltip(tagName));
+        tagLabel.setMaxWidth(160);
+        tagLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
+        return tagLabel;
     }
 
     /**
