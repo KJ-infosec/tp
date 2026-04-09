@@ -108,13 +108,13 @@ public class SampleDataUtil {
         AddressBook sampleAb = new AddressBook();
 
         Person[] persons = getSamplePersons();
-        
+
         for (Person samplePerson : persons) {
             sampleAb.addPerson(samplePerson);
         }
 
         Order[] orders = getSampleOrders(persons);
-        
+
         for (Order sampleOrder : orders) {
             sampleAb.addOrder(sampleOrder);
         }
