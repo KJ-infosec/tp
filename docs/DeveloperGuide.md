@@ -458,7 +458,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC02 - Delete Customer**\
+**Use case: UC02 - Delete Customer**
+
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid customer index), the system does not remove any customer.
 * Only customers that are currently displayed can be deleted.
@@ -555,7 +556,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC05 - Add order**\
+**Use case: UC05 - Add order**
+
 **Guarantees:**
 * The system records the order only if the provided order information is valid.
 
@@ -585,7 +587,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC06 - Delete order**\
+**Use case: UC06 - Delete order**
+
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
 * Only orders that are currently displayed can be deleted.
@@ -972,6 +975,8 @@ Team size: 5
 
 3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
 
+<div class="section-spacing">
+
 ## **Appendix: Effort**
 
 Compared with AB3, BZNUS required substantially more effort because it extends a single-entity contact manager into a multi-entity system with linked `Customer` and `Order` workflows. The added complexity came from coordinating model design, validation, persistence, and UI updates across two related domains instead of one.
@@ -1017,3 +1022,5 @@ Our key achievements include:
 * **A maintainable and extensible codebase**, supported by modular design, clear separation of concerns, and well‑documented components.
 * **Comprehensive automated testing**, covering validation rules, cross‑entity interactions, and persistence behaviour to ensure long-term code reliability.
 * **Clear and user‑focused documentation**, with updated UG/DG sections, diagrams, and testing instructions that reflect the expanded feature set.
+
+</div>
