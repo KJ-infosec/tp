@@ -354,7 +354,7 @@ Format: `find-o Category-Type/Category-Keywords`
 * Find the orders given the `Category-Keywords` from the `Category-Type`.
 * The category keywords refer to the keyword used to look for orders.
 * The category type refers to one of the 4 category options shown above.
-* The category type **must be one of i/a/c/s**, which stand for item, address, customer ID, and status respectively.
+* The category type **must be one of i/a/c/s**, which stand for item, address, customer index, and status respectively.
 * Allows searching with multiple prefixes.
 
 **Examples:**
