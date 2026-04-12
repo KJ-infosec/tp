@@ -148,10 +148,26 @@ public class PersonContainsKeywordsPredicateTest {
                         PersonContainsKeywordsPredicate.SearchType.FACEBOOK, "randomFbAccount"));
         assertTrue(predicate.test(new PersonBuilder().withFacebook("randomFbAccount").build()));
 
+        predicate = new PersonContainsKeywordsPredicate("fb/@lebron.james", false,
+                createMap(PersonContainsKeywordsPredicate.SearchType.FACEBOOK, "lebron.james"));
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("LebronJames").build()));
+
+        predicate = new PersonContainsKeywordsPredicate("fb/ALEX1234", false,
+                createMap(PersonContainsKeywordsPredicate.SearchType.FACEBOOK, "ALEX1234"));
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("Alex.1234").build()));
+
         predicate = new PersonContainsKeywordsPredicate("ig/randomIgAccount",
                 false, createMap(
                 PersonContainsKeywordsPredicate.SearchType.INSTAGRAM, "randomIgAccount"));
         assertTrue(predicate.test(new PersonBuilder().withInstagram("randomIgAccount").build()));
+
+        predicate = new PersonContainsKeywordsPredicate("ig/ALEX1234", false,
+                createMap(PersonContainsKeywordsPredicate.SearchType.INSTAGRAM, "ALEX1234"));
+        assertTrue(predicate.test(new PersonBuilder().withInstagram("Alex.1234").build()));
+
+        predicate = new PersonContainsKeywordsPredicate("ig/@Bernice_Yu", false,
+                createMap(PersonContainsKeywordsPredicate.SearchType.INSTAGRAM, "@Bernice_Yu"));
+        assertTrue(predicate.test(new PersonBuilder().withInstagram("BerniceYu").build()));
 
         predicate = new PersonContainsKeywordsPredicate("r/VIP",
                 false, createMap(
