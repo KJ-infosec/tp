@@ -100,6 +100,22 @@ public class PersonContainsKeywordsPredicateTest {
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(
                 "alice.pau", true, new HashMap<>());
         assertTrue(predicate.test(new PersonBuilder().withFacebook("alice.pauline").build()));
+
+        predicate = new PersonContainsKeywordsPredicate(
+                "@alice.pau", true, new HashMap<>());
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("alicepauline").build()));
+
+    }
+
+    @Test
+    public void test_InstagramContainsPhrase_returnsTrue() {
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(
+                "charlie_1234", true, new HashMap<>());
+        assertTrue(predicate.test(new PersonBuilder().withInstagram("charlie_1234").build()));
+
+        predicate = new PersonContainsKeywordsPredicate(
+                "@charlie_1234", true, new HashMap<>());
+        assertTrue(predicate.test(new PersonBuilder().withInstagram("charlie1234").build()));
     }
 
     @Test
